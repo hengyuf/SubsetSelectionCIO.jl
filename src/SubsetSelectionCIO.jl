@@ -1,6 +1,6 @@
 module SubsetSelectionCIO
 
-using SubsetSelection, JuMP, Gurobi, CPLEX, MathOptInterface, LinearAlgebra, GLMNet
+using SubsetSelection, JuMP, Gurobi, MathOptInterface, LinearAlgebra, GLMNet
 
 import Compat.String
 
@@ -44,7 +44,7 @@ function oa_formulation(ℓ::LossFunction, Y, X, k::Int, γ;
 
   n,p = size(X)
 
-  miop = (solver == :Gurobi) ? Model(Gurobi.Optimizer) : Model(CPLEX.Optimizer)
+  miop = (solver == :Gurobi) ? Model(Gurobi.Optimizer) : Model(Gurobi.Optimizer)
   set_optimizer_attribute(miop, (solver == :Gurobi) ? "TimeLimit" : "CPX_PARAM_TILIM", ΔT_max)
   set_optimizer_attribute(miop, (solver == :Gurobi) ? "OutputFlag" : "CPX_PARAM_SCRIND", 1*verbose)
   set_optimizer_attribute(miop, (solver == :Gurobi) ? "MIPGap" : "CPX_PARAM_EPGAP", Gap)
